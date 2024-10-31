@@ -6,16 +6,33 @@
 //
 
 import SwiftUI
+    var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Spain", "UK", "Ukraine", "US"]
+    var correctAnswers = Int.random(in: 0...2)
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        ZStack {
+            Color.gray
+                .ignoresSafeArea()
+            
+            VStack(spacing: 30) {
+                VStack {
+                    Text("Tap the flag of")
+                        .foregroundStyle(.white)
+                    
+                    Text(countries[correctAnswers])
+                        .foregroundStyle(.white)
+                }
+                
+                ForEach(0..<3) { number in
+                    Button {
+                        
+                    } label: {
+                        Image(countries[number])
+                    }
+                }
+            }
         }
-        .padding()
     }
 }
 
