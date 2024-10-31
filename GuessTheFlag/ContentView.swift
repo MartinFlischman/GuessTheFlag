@@ -6,10 +6,14 @@
 //
 
 import SwiftUI
-    var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Spain", "UK", "Ukraine", "US"]
-    var correctAnswers = Int.random(in: 0...2)
 
 struct ContentView: View {
+    var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Spain", "UK", "Ukraine", "US"].shuffled()
+    var correctAnswers = Int.random(in: 0...2)
+
+    @State private var showingScore = false
+    @State private var scoreTitle = ""
+    
     var body: some View {
         ZStack {
             Color.gray
