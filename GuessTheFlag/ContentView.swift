@@ -5,6 +5,13 @@
 //  Created by Martin on 2024/10/30.
 //
 
+//
+//  ContentView.swift
+//  GuessTheFlag
+//
+//  Created by Martin on 2024/10/30.
+//
+
 import SwiftUI
 
 struct ContentView: View {
@@ -13,6 +20,8 @@ struct ContentView: View {
     @State private var showingScore = false
     @State private var scoreTitle = ""
     @State private var playerScore = 0
+    @State private var questionCount = 1
+    @State private var gameOver = false
     
     var body: some View {
         ZStack {
@@ -73,6 +82,11 @@ struct ContentView: View {
         } message: {
             Text("Your score is: \(playerScore)")
         }
+        .alert("Game Over!", isPresented: $gameOver) {
+            Button("Play Again", action: resetGame)
+        } message: {
+            Text("Your final score was \(playerScore) out of 8")
+        }
     }
     
     func flagTapped(_ number: Int) {
@@ -80,14 +94,26 @@ struct ContentView: View {
             playerScore += 1
             scoreTitle = "Correct! "
         } else {
-            scoreTitle = "Wrong - That was \(countries[number])."
+            scoreTitle = "Wrong! That's the flag of \(countries[number])."
             playerScore -= 1
         }
         
-        showingScore = true
+        if questionCount == 8 {
+            gameOver = true
+        } else {
+            showingScore = true
+        }
     }
     
     func askQuestion() {
+        countries.shuffle()
+        correctAnswer = Int.random(in: 0...2)
+        questionCount += 1
+    }
+    
+    func resetGame() {
+        questionCount = 1
+        playerScore = 0
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
     }
